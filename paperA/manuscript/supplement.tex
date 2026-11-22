@@ -1,0 +1,52 @@
+% Paper A: supporting information.
+% Build: latexmk -pdf -outdir=build supplement.tex
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage[round,authoryear]{natbib}
+\usepackage[hidelinks]{hyperref}
+
+\graphicspath{{figures/}}
+
+% Number everything S1, S2, ...
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\theequation}{S\arabic{equation}}
+
+\title{Supporting Information: Climate sensitivity of tree demography in Western Ghats wet-evergreen forest}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{ODD description of the individual-based model}\label{sec:odd}
+% Overview, Design concepts, Details (Grimm et al. 2020).
+
+\section{Observation-process audit}\label{sec:obs}
+% From paperA/docs/observation_process.md.
+
+\section{Priors, fixed parameters and sources}\label{sec:priors}
+
+\section{Inference diagnostics}\label{sec:diagnostics}
+% SBC, expected coverage, summary-statistic ablation, misspecification checks.
+
+\section{NPE versus likelihood posteriors}\label{sec:npe-vs-likelihood}
+% §3.6.4.
+
+\section{Space-for-time consistency check (96-site network)}\label{sec:cwg96}
+
+\section{TRACE documentation}\label{sec:trace}
+
+\bibliographystyle{abbrvnat}
+\bibliography{references}
+
+\end{document}

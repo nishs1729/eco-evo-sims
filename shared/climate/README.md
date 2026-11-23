@@ -1,6 +1,6 @@
 # shared/climate
 
-The common climate pipeline, specified in ROADMAP §2.3. Used by Paper A (plot-scale drivers and projections) and Paper B (exposure metrics).
+The common climate pipeline, specified in ROADMAP §2.3. Used by Project A (plot-scale drivers and projections) and Project B (exposure metrics).
 
 ## Planned contents
 
@@ -10,4 +10,4 @@ The common climate pipeline, specified in ROADMAP §2.3. Used by Paper A (plot-s
 - **GCM selection:** exclude "hot models", then pick 5–8 models that span the projected change. Document it in `gcm_selection.md`.
 - **Scenarios and horizons:** SSP1-2.6, SSP2-4.5, SSP3-7.0 (SSP5-8.5 as a high-end bound); 2041–2060 and 2071–2090.
 
-Downloaded climate data go in a git-ignored `data/` folder here, with a `data/manifest.yaml`, following the same rules as the paper folders.
+Downloaded climate data go in a git-ignored `data/` folder here, with a `data/manifest.yaml`, following the same rules as the project folders.

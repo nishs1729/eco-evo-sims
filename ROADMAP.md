@@ -3,9 +3,9 @@
 
 ### 0.1 Unifying theme
 
-**Forecasting climate vulnerability under explicit uncertainty, from forest stands to genomes.** Each paper makes a forecast or a forecast-relevant assessment, and each is explicit about what the data can and can't identify.
+**Forecasting climate vulnerability under explicit uncertainty, from forest stands to genomes.** Each project makes a forecast or a forecast-relevant assessment, and each is explicit about what the data can and can't identify.
 
-| | Paper A | Paper B | Paper C |
+| | Project A | Project B | Project C |
 |---|---|---|---|
 | **Question** | How sensitive is Western Ghats wet-evergreen tree demography to dry-season deficit and heat, and what does that imply under CMIP6? | Where do India's KMGBF genetic-diversity indicators stand? Where is genetic data coverage missing for the species most exposed to climate change? | When can genomic data tell us which populations will persist under climate change, and what does genomic offset add beyond the magnitude of change, population size and genetic variance? |
 | **Type** | Empirical ecology plus mechanistic model | Systematic review, indicator assessment, macroecology | Simulation study with two empirical anchors |
@@ -16,23 +16,23 @@
 ### 0.2 Constraints and what follows from them
 
 - **0.5 FTE, single researcher.** Researcher time is the binding constraint, so:
-  - Only one paper is in its *primary* phase at any time.
+  - Only one project is in its *primary* phase at any time.
   - Low-intensity background tasks (about 10–20% of time) run alongside: literature screening for B, the design document and pilot simulations for C.
   - Simulations run unattended on HPC while you write.
   - B needs a **second screener** for part of the systematic review: a student, intern or collaborator, for a 20% double-screened sample.
 - **Supercomputer access.** Compute isn't limiting, so:
   - Prefer designs that are heavy on compute and light on human effort: large simulation budgets, ensembles of NPEs, and full factorial sensitivity analyses in place of hand tuning.
-  - Still benchmark runtimes. Many HPC centres need an allocation proposal with justified core-hours, so write the proposal in M1–2.
+  - Still benchmark runtimes. Access is already in place, so no allocation proposal is needed (decided 2026-11-23).
   - Use job arrays, checkpointing and containers (Apptainer).
 
 ### 0.3 Dependencies
 
 ```mermaid
 graph TD
-  P0((Phase 0: novelty, permissions, infra)) --> A(Paper A)
+  P0((Phase 0: novelty, permissions, infra)) --> A(Project A)
   P0 --> Bbg(B background: protocol + screening)
-  A -->|SBI pipeline, HPC workflow| C(Paper C)
-  A -->|climate pipeline| B(Paper B)
+  A -->|SBI pipeline, HPC workflow| C(Project C)
+  A -->|climate pipeline| B(Project B)
   Bbg --> B
   B -->|Indian collaborators, exposure code| C
   Cbg(C background: ADEMP design + pilot sims) --> C
@@ -56,10 +56,11 @@ graph TD
 
 ### 1.1 Novelty checks
 
-Use **three methods** for each paper. Log every hit in a spreadsheet with columns *citation | what it does | overlap with us | our delta | verdict*.
+Use **three methods** for each project. Log every hit in a spreadsheet with columns *citation | what it does | overlap with us | our delta | verdict*.
 
 1. **Boolean searches** in Web of Science, Scopus, Google Scholar, bioRxiv and EcoEvoRxiv. For B, also search Shodhganga, which holds Indian theses.
-2. **Forward and backward citation chasing** from the 3–5 anchor papers listed for each paper below.
+   - *Project A (done 2026-11-23):* searched OpenAlex, Crossref and Semantic Scholar instead. Scopus, Web of Science and Google Scholar were deliberately not searched, and the search is closed (`docs/decisions.md`). Report the databases actually used in the methods.
+2. **Forward and backward citation chasing** from the 3–5 anchor papers listed for each project below.
 3. **Ask 2–3 experts** (prospective co-authors) to name the closest work.
 
 **Search strings**
@@ -86,15 +87,15 @@ Use **three methods** for each paper. Log every hit in a spreadsheet with column
 - B: Pearman et al. 2024; Mastretta-Yanes et al. 2024; Hoban et al. 2020/2023; Csilléry et al. 2025 (GenDivRange).
 - C: Láruson et al. 2022; Lind & Lotterhos 2025; Gain et al. 2023; Bay et al. 2018; Kyriazis et al. 2021.
 
-**Deliverable.** For each paper, one sentence in the form "The closest existing work is X; we differ by Y; Y matters because Z". Paste it into the paper's §x.2 below.
+**Deliverable.** For each project, one sentence in the form "The closest existing work is X; we differ by Y; Y matters because Z". Paste it into the project's §x.2 below.
 
 ### 1.2 Decision gates and kill criteria (master table)
 
-Every gate is quantitative. "Reframe" means the paper continues with a narrower claim. "Kill" means the paper is dropped and its time goes to the next one.
+Every gate is quantitative. "Reframe" means the project continues with a narrower claim. "Kill" means the project is dropped and its time goes to the next one.
 
 | Gate | When | Pass criterion | If it fails |
 |---|---|---|---|
-| **P0** Programme | M2 | Permissions and data terms confirmed for Uppangala and Anamalai; NBA/DSI position documented; HPC allocation granted | Delay A's analysis (not data cleaning) until resolved |
+| **P0** Programme | M2 | Permissions and data terms confirmed for Uppangala and Anamalai; NBA/DSI position documented; HPC allocation granted. **Project A: assumed met (2026-11-23):** data use is assumed permitted and HPC access is already available, so Project A schedules no permission or allocation steps. The NBA/DSI question remains open for B and C | Delay A's analysis (not data cleaning) until resolved |
 | **A1** Novelty | M2 | No published climate-forced demographic model calibrated on Uppangala or other Western Ghats plots | Reposition around what the competitor lacks (likely the observation model, the identifiability analysis, or joint multi-site calibration) |
 | **A2** Data audit | M3 | Inclusion threshold, census dates per stem, census completeness for 2007/2010, and POM changes are all documented | If 2007/2010 are partial, the hold-out becomes the matching subplots, plus leave-one-site-out |
 | **A3** Identifiability | M9 | On synthetic data at the 3 representative parameter sets: posterior SD ≤ 0.5 × prior SD for **at least the mortality–deficit and growth–deficit sensitivities**, and SBC ranks uniform (χ² test p > 0.01 for each parameter, with visual check) | Reframe RQ3 as conditional projections plus a detectability analysis (§3.7). Never kill A for this |
@@ -104,7 +105,7 @@ Every gate is quantitative. "Reframe" means the paper continues with a narrower 
 | **B3** Exposure | M19 | ≥ 100 Tier-1 species with usable range maps or ≥ 30 cleaned occurrences | Restrict the exposure overlay to the taxa that pass |
 | **C1** Pilot | M27 | (i) local adaptation established before the shift (home-versus-away fitness advantage > 0 in ≥ 90% of runs); (ii) load and mean fitness at equilibrium (trend over the last 20% of burn-in within ± 2%); (iii) deme extinction prevalence 20–80% across the pilot design; (iv) GF and RDA offsets computable with no degenerate fits in ≥ 95% of runs; (v) ≤ 2 CPU-hours per run *after* the burn-in, so the main design fits the allocation | Simplify (shorter genome, fewer QTL levels) and rerun the pilot once; if it fails again, reduce the design to a 1-D gradient with one trait |
 | **C2** Oracle ladder pilot | M30 | Rung 1 (true maladaptation) beats climate distance on within-scenario C-index in ≥ 1 design region | If not, the headline becomes "maladaptation, even when known exactly, doesn't predict persistence beyond the magnitude of change". That is still publishable. No kill |
-| **C3** Forecast scope | M36 | An NPE pilot recovers ≥ 3 of the latent quantities (Ne, V_A, lag, load) with expected coverage within ± 5% | The forecast stays in Paper C, built only on the latent quantities that *are* recovered. Which quantities genomic and count data can't recover is reported as a result in its own right (it limits any genomics-based forecast). No spin-out |
+| **C3** Forecast scope | M36 | An NPE pilot recovers ≥ 3 of the latent quantities (Ne, V_A, lag, load) with expected coverage within ± 5% | The forecast stays in Project C, built only on the latent quantities that *are* recovered. Which quantities genomic and count data can't recover is reported as a result in its own right (it limits any genomics-based forecast). No spin-out |
 
 ### 1.3 Data access, ethics and governance (owner: you; M1–M2)
 
@@ -161,21 +162,23 @@ Package maintenance: before depending on any package, record its last release, o
 
 ### 2.2 Reproducibility and HPC
 
-- **Environment locks:** `Manifest.toml` for Julia, `uv.lock` or `conda-lock` for Python, `renv.lock` for R. Build one **Apptainer** image per paper from these locks and record the image hash in every output's metadata.
+- **Environment locks:** `Manifest.toml` for Julia, `uv.lock` or `conda-lock` for Python, `renv.lock` for R. Build one **Apptainer** image per project from these locks and record the image hash in every output's metadata.
 - **Simulation registry:** a Parquet or SQLite table with one row per simulation. Columns: run ID, replicate-group ID (shared burn-in), parameter vector, seed, software versions and image hash, start/end time, exit status, path to outputs, and a summary-statistic vector.
   - Every analysis reads from the registry, never from loose files.
   - Grouped cross-validation (C) and SBC (A) depend on clean group IDs.
 - **Seeds:** derived deterministically from the run ID (for example `hash(run_id) mod 2^31`).
 - **HPC pattern:** job arrays of about 1,000 tasks; each task runs a batch of simulations and appends to a shard of the registry. Checkpoint SLiM burn-ins as `.trees` files so they can be reused.
-- **Repository layout (target):** `paperA/`, `paperB/`, `paperC/`, `shared/climate/`, `shared/hpc/`, `docs/`, `archive/`. Each paper has `config/`, `workflow/Snakefile`, `src/`, `results/` (git-ignored) and `manuscript/`.
-  - *Note:* this is where the repository ends up, not where it starts. It starts with a minimal skeleton (created 2026-11-22; see [README.md](README.md)): `planning/`, `docs/`, `shared/` (`climate/`, `sbi/`), and `paperA/` containing `data/`, `src/`, `docs/`, `results/` and `manuscript/` (LaTeX). Each remaining piece is added when a Paper A activity first needs it:
+- **Repository layout (target):** `projectA/`, `projectB/`, `projectC/`, `shared/climate/`, `shared/hpc/`, `docs/`, `archive/`. Each project has `config/`, `workflow/Snakefile`, `src/`, `results/` (git-ignored) and `manuscript/`.
+  - *Note:* this is where the repository ends up, not where it starts. It starts with a minimal skeleton (created 2026-11-22; see [README.md](README.md)): `planning/`, `docs/`, `shared/` (`climate/`, `sbi/`), and `projectA/` containing `data/`, `src/`, `docs/`, `results/` and `manuscript/` (LaTeX). Each remaining piece is added when a Project A activity first needs it:
     - `config.yaml` at A09;
     - the Snakemake workflow at A12–A13;
     - the `WGForest.jl` package at A18;
     - the container and HPC profile at A20;
     - the simulation registry at A24.
 
-    `paperB/` and `paperC/` are created when those papers start. The trigger for each piece is also listed in `paperA/README.md`.
+    A08 (done 2026-11-23) set up the Python environment only: `pyproject.toml` and `uv.lock` at the repo root (Python 3.13, uv), pytest tests in `projectA/tests/`, and `docs/dependencies.md`. Julia and R environments are created at A15/A18.
+
+    `projectB/` and `projectC/` are created when those projects start. The trigger for each piece is also listed in `projectA/README.md`.
 - **Tests:**
   - A: unit tests for every vital-rate function and for the observation model, including a test that simulated "censuses" reproduce the threshold and interval logic.
   - C: a regression test that a fixed seed reproduces a stored summary vector.
@@ -188,6 +191,7 @@ Package maintenance: before depending on any package, record its last release, o
 - IMD gridded temperature: historically 1°; VERIFY whether a finer operational product exists.
 - CHELSA (about 1 km, topographically downscaled) for monthly climatologies and time series. VERIFY the CHELSA time-series coverage period.
 - **Plot-scale validation:** compare gridded rainfall with any station or estate rain-gauge records near the plots (Valparai estates; Forest Department stations near Uppangala). Quantify the bias. Rainfall on the Western Ghats escarpment can vary by a factor of 2 within one 0.25° cell.
+  - Lead from A01: Bankar et al. 2025 (preprint) evaluated six gridded and satellite rainfall products (CHIRPS, MSWEP, IMERG, AgERA5, GSMaP, PERSIANN-CCS) against a dense Karnataka state rain-gauge network. Check for gauges near Uppangala, and consider those products as alternatives to IMD where they perform better. Kunnath-Poovakka et al. 2020 describe bias correction of satellite rainfall across the Western Ghats.
 
 **Projections**
 
@@ -219,17 +223,27 @@ Package maintenance: before depending on any package, record its last release, o
 
 ---
 
-## 3. Paper A: Climate sensitivity of Western Ghats wet-evergreen tree demography
+## 3. Project A: Climate sensitivity of Western Ghats wet-evergreen tree demography
 
 ### 3.1 One-sentence claim (target)
 
 Dry-season water deficit and heat measurably change tree mortality and growth in Western Ghats wet-evergreen forest. Under CMIP6 scenarios, these sensitivities imply [direction and size] changes in basal area and guild composition by 2050 and 2080, with uncertainty partitioned among parameters, climate models, scenarios and demographic stochasticity.
 
-### 3.2 Closest work and our contribution (fill in after §1.1)
+### 3.2 Closest work and our contribution (from A01, 2026-11-23; Gate A1 passed)
+
+Full evidence: `projectA/docs/novelty/A01_novelty_report.md` and `A01_screened_hits.csv`.
+
+> The closest existing work is Machado et al. (2023), who found weak drought effects on tree survival at Uppangala. We differ by estimating continuous dry-season deficit and heat sensitivities of growth, survival and recruitment within a calibrated, validated stand model with an explicit observation model and detectability analysis. This matters because only that combination can say whether the climate signal is real, how much data would be needed to detect it, and what it implies for Western Ghats forests under CMIP6.
 
 | Closest work | What it does | Our contribution |
 |---|---|---|
-| Earlier spatially explicit models calibrated on Uppangala (identify them; VERIFY) | Structure and dynamics at Uppangala | Climate forcing, a formal observation model, quantified identifiability, CMIP6 projections |
+| **Machado et al. 2023, *Biotropica* (closest competitor; full text read, see `projectA/docs/novelty/Machado2023_notes.md`)** | Bayesian hierarchical survival model on the same public Uppangala data (E092-115-D1). Drought is a binary indicator for the 2001–07 interval (2002 drought, from 0.5° SPEI; no local climate data). Mortality 0.72 → 1.07 %/yr; community β1 = −0.39 (logit); no size dependence; understorey guild most sensitive, emergent marginal, canopy no effect. They call for process-based modelling and for analysing the 2009 and 2016–18 droughts | Growth, survival and recruitment jointly; continuous deficit and heat (plot-scale climate) with lags; observation model; detectability limits; second site; held-out validation; projections |
+| Le Bec et al. 2015, *PLoS ONE* | Hierarchical growth model on 21 years of Uppangala diameter increments (size, competition) | Adds climate and the other vital rates; growth becomes one module of a calibrated stand model. Compare Stage-1 growth estimates with theirs |
+| Earlier Uppangala individual-based models: Moravie et al. 1997, *Ecol. Model.*; Houllier et al. 1997; Le Bec 2014 (PhD thesis, HAL tel-01116564: SELVA simulator on the Capsis platform, plus Cox and joint growth–survival models) | Canopy regeneration and tree architecture; stand resilience after disturbance driven by individual growth variability | Climate forcing, recruitment, formal calibration and observation model, quantified identifiability, CMIP6 projections. Le Bec's joint growth–survival models are a Stage-1 precedent on the same data |
+| Coarse-scale projections for Indian forests: Fitha et al. 2026 (LPJ-GUESS forced by CMIP6); Ghosh et al. 2025 (preprint); Das et al. 2022 (MC2) | LPJ-GUESS projects carbon increases (smaller in the Western Ghats), while Ghosh et al. project savannization of major Indian forests by the late 21st century | Plot-calibrated, demography-based, validated projections. The disagreement between the coarse-scale projections is itself a motivation; contrast all three in the discussion |
+| Krishnadas et al. 2021, *Global Ecol. Biogeogr.* | Seasonal drought structures Western Ghats tree species distributions and communities | Demographic rates rather than occurrence; supports dry-season deficit as the primary climate variable |
+| Suresh et al. 2010, *For. Ecol. Manage.* (Mudumalai) | 19-year record: mortality tracks rainfall with a 2–3-year lag (dry forest) | Wet evergreen forest, mechanistic model; motivates the lagged-deficit alternative (§3.5.2) |
+| Aubry-Kientz et al. 2013/2015 (Paracou) | Bayesian coupling of growth and mortality to identify climate drivers | Methods template for Stage 1, applied to an Asian monsoon forest with recruitment and projections |
 | Rüger et al. 2020, *Science* | A PPA model with five demographic groups at BCI | A monsoon forest in India, explicit climate sensitivity, held-out validation |
 | Hartig et al. 2014, *Biogeosciences* | ABC calibration of FORMIND | Hybrid likelihood + NPE, misspecification diagnostics, identifiability gate |
 | Tropical drought-mortality literature (Bennett et al. 2015; others) | Large trees are more vulnerable to drought | Tests this in an Asian monsoon forest with 20–30 years of mapped data |
@@ -241,38 +255,57 @@ Dry-season water deficit and heat measurably change tree mortality and growth in
 
 | ID | Hypothesis (prediction) | Test | If null |
 |---|---|---|---|
-| **H-A1** | The annual mortality hazard increases with dry-season water deficit, and the effect is stronger for large trees (hydraulic risk) | Posterior of the deficit × size interaction in the survival model excludes 0 (95% CrI) | Report the posterior and the **minimum detectable effect** given the data (§3.7); state how many more census years would be needed |
+| **H-A1** | **Primary:** the annual mortality hazard increases with dry-season water deficit. **Secondary:** the effect is stronger for large trees (hydraulic risk; Bennett et al. 2015). Machado et al. 2023 found no size dependence in these data, so the secondary prediction is tested with its detectability stated up front | Primary: the posterior of the deficit coefficient in the survival model is > 0, with the 95% CrI excluding 0. Secondary: the posterior of the deficit × size interaction, reported next to its minimum detectable size from §3.7 | Report the posterior and the **minimum detectable effect** given the data (§3.7); state how many more census years would be needed. A null secondary result below the minimum detectable size is reported as "not detectable", not as "no effect" |
 | **H-A2** | Girth growth declines with dry-season heat (Tmax) and deficit | Growth-model posteriors for both coefficients are < 0 | Same as H-A1 |
-| **H-A3** | The sensitivities differ among trait-based guilds: low-wood-density and evergreen-canopy guilds are more sensitive | Guild-specific posteriors; posterior probability of the predicted ordering | Report a shared sensitivity. Guild composition then shifts only through structural effects |
+| **H-A3** | Sensitivity to deficit differs among guilds, under two pre-specified schemes. **(a) Canopy-position guilds** (emergent, canopy, subcanopy, understorey; Pélissier et al. 2011b Table S4): survival of the **understorey** guild is the most sensitive and the canopy guild the least (replicates Machado et al. 2023). **(b) Trait-based guilds** (A11): low-wood-density guilds are more sensitive | Guild-specific posteriors under each scheme; posterior probability of the predicted ordering. (a) is supported if the understorey deficit effect excludes 0 (95% CrI) and is the most adverse of the four. On the 1990–2010 data, (a) is a re-analysis with continuous deficit, not an independent replication; it is independent only on post-2010 censuses or the second site | Report a shared sensitivity. Guild composition then shifts only through structural effects. A reversal of the understorey result under (a) is reported as a failure to replicate |
 | **H-A4** | A climate-informed model beats a climate-free null at predicting held-out censuses | CRPS or log-score difference, with a bootstrap CI over stems or subplots | Climate signal is undetectable at this scale. Projections are reported as conditional on literature-informed priors and labelled as such |
-| **H-A5** | Under SSP2-4.5 and SSP3-7.0, basal area declines by 2080, mainly through increased large-tree mortality, and guild composition shifts toward drought-tolerant (high wood density) guilds | Posterior predictive distribution of change, with uncertainty partitioned (§3.8) | Report "no detectable change" with its uncertainty band, which is informative in itself |
+| **H-A5** | Under SSP2-4.5 and SSP3-7.0, basal area declines by 2080, and guild composition shifts toward the less drought-sensitive guilds identified under H-A3. Attribution of the decline to large-tree mortality is claimed only if the H-A1 size interaction is detected | Posterior predictive distribution of change, with uncertainty partitioned (§3.8) | Report "no detectable change" with its uncertainty band, which is informative in itself |
 
 **RQ1 (fit)** is assessed only on **held-out** data. Fit to the calibration data is reported as a diagnostic, not as a result.
+
+**Positioning of H-A1 and H-A3 (from A01).** Machado et al. 2023 already tested drought effects on survival, including differences among canopy strata, on the same Uppangala data, and found only a marginal effect. H-A1 and H-A3 are therefore framed as building on that result:
+- They extend a contrast around one drought to continuous sensitivities to deficit and heat, for growth and recruitment as well as survival.
+- They make the size interaction secondary (Machado et al. found none) and report its minimum detectable size.
+- They test both canopy-position and trait-based guilds, with Machado et al.'s understorey result as an explicit replication prediction.
+- They report a minimum detectable effect, so a weak signal becomes an interpretable result rather than a null.
+
+**Full text read (2026-11-23).** Its findings led to the rewording of two hypotheses, **adopted 2026-11-23** (table above; `docs/decisions.md`):
+- **H-A1:** Machado et al. found **no size dependence** of the drought effect on survival. They attribute this to the > 30 cm GBH threshold and to few trees > 100 cm DBH. The deficit × size interaction may not be detectable in these data. Adopted: the main deficit effect is the primary prediction and the size interaction secondary, with its minimum detectable size reported (§3.7).
+- **H-A3:** they found the **understorey** guild most sensitive, emergents marginal and the canopy unaffected. That differed from the original prediction ("low-wood-density and evergreen-canopy guilds are more sensitive"). Their canopy-position guilds (emergent, canopy, subcanopy, understorey; Pélissier et al. 2011b Table S4, distributed with the data) give a ready candidate scheme next to the trait-based one (A11). Adopted: test both schemes, with replication of the understorey result as an explicit prediction. The trait-based prediction drops "evergreen-canopy guilds are more sensitive", which contradicted the understorey prediction.
+- **Priors and Gate A3:** use their effect sizes (mortality 0.72 → 1.07 %/yr over the drought interval; logit β1 ≈ −0.4, converted to a per-unit-deficit effect) for a weakly informative prior and to set the "medium" synthetic parameter set (§3.7).
 
 ### 3.4 Data
 
 #### 3.4.1 Datasets
 
 - **Uppangala permanent sample plot** (Pushpagiri Wildlife Sanctuary, Karnataka; IFP).
-  - 5.07 ha, about 3,870 tagged and mapped trees.
-  - Censuses: 1990–1993 (initial, staggered), 1994, 1997–98, 2001–02, 2007 and 2010.
-  - Data paper: Pélissier et al. 2011, *Ecology* (Ecological Archives). VERIFY the citation and whether later censuses have been published since.
+  - 5.07 ha, 3,870 tagged and mapped trees (all trees ever recorded, 1990–2010), with dendrometer bands.
+  - Censuses: 1990–1993 (initial, staggered), 1994, 1997–98, 2001–02, 2007 and 2010 (C0–C5 in Machado et al. 2023). Inclusion threshold > 30 cm GBH (> 9.5 cm DBH), confirmed by Machado et al. 2023. Their data had 3,672 unique trees of 102 species.
+  - Data paper: Pélissier et al. 2011, *Ecology*, Ecological Archives E092-115, doi:10.1890/10-1991.1 (verified 2026-11-23).
   - Listed in BioTIME (study 329; VERIFY).
+  - From the data (A02): every census covered all plots, including 2007 and 2010. Census dates are per field trip, not per stem. No POM variable; dendrometer-band changes are counted. Species list includes each species' potential stratum (emergent, canopy, subcanopy, understorey), the canopy-position guilds for H-A3(a). Details: `projectA/docs/data_dictionary.md`.
   - **Primary calibration and validation site.**
+- **Further Uppangala data found in A01** (see `docs/governance.md`). **Not requested for now:** Project A makes no data-owner contact (decided 2026-11-23) and uses the public data only. Kept as leads:
+  - **Re-census to 2021** of four logged and two unlogged 1-ha plots (Wilson et al. 2022, *Environ. Monit. Assess.*; stems ≥30 cm GBH). It could extend the temporal hold-out past 2010, including the 2015–16 drought years, at least for the unlogged plots.
+  - **Small-stem plot:** 1 ha, stems ≥1 cm DBH, with a first re-census (Drishya et al. 2026). It could directly constrain the latent sapling pool and recruitment module (§3.5.3), the least identified part of the model.
+  - **Traits and LiDAR for a 10-ha plot:** leaf and wood traits of 89 species, 99% of individuals (Schmitt et al. 2021, *J. Veg. Sci.*). Ready-made inputs for trait-based guilds (A11); their canopy/understorey guild split is a candidate scheme.
+  - Also ask whether the main 5.07-ha plot was re-censused after 2010. This is now a priority: Machado et al. 2023 point to further droughts in **2009 and 2016–2018**, after the public record ends. Post-2010 censuses would add the only other drought events available for estimating climate sensitivity.
 - **Anamalai Hills long-term plots** (Zenodo 10426970).
   - Two 1-ha plots, censused every year from 2017 to 2022: mature forest in Anamalai Tiger Reserve and secondary forest on the Valparai Plateau.
-  - Stem coordinates and alive/dead status; RAINFOR-GEM protocol.
+  - Stem coordinates and alive/dead status; RAINFOR-GEM protocol. Stems **≥ 10 cm GBH** (lower than Uppangala's 30 cm; truncate for the joint fit); POM recorded per stem. CC-BY-4.0.
   - Contact person listed in the Zenodo metadata.
   - **Second calibration site (joint fit) and transfer test.**
 - **Central Western Ghats 96-site network** (Karnataka).
-  - 76,813 trees and lianas of 446 species in 96 one-hectare plots across about 22,000 km², sampled in 1996–97.
-  - Includes environmental covariates and degradation levels.
-  - Ramesh et al. 2010, *Ecology* data paper; VERIFY.
+  - 76,813 trees and lianas of 446 species, sampled in 1996–97 across about 22,000 km²: 61,965 stems ≥ 10 cm GBH in 96 one-hectare macroplots, plus 14,848 smaller individuals in microplots.
+  - Includes environmental covariates and degradation levels (structural integrity 1–3).
+  - Ramesh et al. 2010, *Ecology* 91:3118, Ecological Archives E091-216, doi:10.1890/10-0133.1 (verified 2026-11-23).
+  - Its species list gives maximum-height class and leaf phenology for 446 species: a ready trait source for guilds (A11).
   - **A single snapshot with no demographic rates.** Used only for a space-for-time consistency check (§3.8.4) and for trait/guild coverage.
 - **Additional data**, to be examined; include only if it has individual-level remeasurements:
   - BioTIME study 813 (10 half-hectare plots, 2002–2022, 180 species, Kerala; VERIFY the ID and whether individuals are tracked).
   - NCF datasets from the Valparai Plateau and Anamalai Tiger Reserve.
   - TreeGhatsData (VERIFY that it exists and is accessible).
+  - Varagalaiar 30-ha plot, Anamalais (Ayyappan & Parthasarathy 1999, 2004): a possible third evergreen site if it has been re-censused.
 - **Traits for guilds:**
   - Wood density from the Global Wood Density Database (Zanne et al. 2009).
   - Maximum height or adult stature from the plot data.
@@ -283,11 +316,11 @@ Dry-season water deficit and heat measurably change tree mortality and growth in
 
 #### 3.4.2 Observation-process audit (Gate A2, M3)
 
-Document the following in `paperA/docs/observation_process.md`. Each item becomes part of the simulator's **observation model**.
+Document the following in `projectA/docs/observation_process.md`. Each item becomes part of the simulator's **observation model**.
 
 | Item | Why it matters | What to record |
 |---|---|---|
-| Inclusion threshold (girth at breast height; Uppangala ≈ 30 cm GBH, VERIFY) | Recruitment is ingrowth over the threshold, not establishment | Threshold for each site and census |
+| Inclusion threshold (girth at breast height; Uppangala > 30 cm GBH, confirmed by Machado et al. 2023) | Recruitment is ingrowth over the threshold, not establishment | Threshold for each site and census |
 | Census date for each stem | Census intervals are unequal and staggered | Date for each stem where available, otherwise the census midpoint |
 | Census completeness (especially 2007 and 2010) | Determines the hold-out design | Area covered by each census |
 | Point of measurement (POM) changes and buttresses | Spurious growth | POM flags and the cleaning rule |
@@ -321,7 +354,10 @@ Document the following in `paperA/docs/observation_process.md`. Each item become
   - Covariates: U-shaped size dependence (linear and quadratic in log size), crowding, deficit, Tmax, and deficit × size (H-A1).
   - The same random-effect structure as growth.
 - **Climate covariates** are averaged over each stem's actual census interval. Also test the interval *maximum* deficit, since single droughts may matter more than averages.
+- **Interval-level confounding (from Machado et al. 2023).** With about 5 census intervals, climate has very few independent values at the interval level, and an interval (year) random effect can absorb the climate signal. Machado et al. compared the drought interval with earlier ones, which confounds drought with any trend across intervals. Pre-register both specifications (with and without interval random effects), and let the identifiability study (§3.7) quantify how much climate signal each can recover. Census dates add little within-interval variation: at Uppangala they are per field trip (two trips about 5 months apart in C2 and C3), not per stem (A02). Use them anyway, but don't count on them to separate climate from interval effects.
+- **Lagged deficit (pre-specified alternative, from A01).** At Mudumalai, mortality of large stems tracks rainfall with a 2–3-year lag (Suresh et al. 2010). Fit a survival-model variant with deficit lagged by 1–3 years, and compare it with the unlagged model by PSIS-LOO.
 - **Guilds:** 3–5 **trait-based** guilds. Cluster on wood density, maximum stature and phenology, then fix the guilds. Don't define guilds from the demographic rates being fitted (that would double-dip).
+- **Second guild scheme for H-A3:** the four canopy-position guilds of Pélissier et al. 2011b (Table S4, distributed with the data). Fit the Stage-1 survival and growth models once under each scheme. The IBM (§3.5.3) uses the trait-based scheme.
 - **Software:** Turing.jl or brms/Stan (§2.1). Check with posterior predictive checks, leave-one-out cross-validation (PSIS-LOO), and leave-one-interval-out cross-validation.
 
 #### 3.5.3 Stage 2: IBM
@@ -390,6 +426,7 @@ Covered in §3.5.2.
   - Basal area and stem density per guild.
   - Spatial pattern of recruits relative to con-guild adults: the mark-connection function at r = 2, 5, 10 and 20 m.
   - Pair-correlation function of all stems at the same distances.
+  - Check these distance bins against Pélissier 1998 (*J. Trop. Ecol.*, doi:10.1017/s0266467498000017), which analysed young-versus-adult spatial patterns at Uppangala with pair-correlation and point-process models.
 - **Optional learned summaries:** a permutation-invariant embedding network (DeepSets) on recruit coordinates plus girth. Use it only if the ablation (§3.6.3) shows that the hand-picked summaries lose information.
 - **Method:**
   - An ensemble of 5–10 NPE models (neural spline flows; varied seeds and architectures).
@@ -417,6 +454,7 @@ All run on synthetic data with known parameters before real data.
 ### 3.7 Identifiability and detectability study (Gate A3, M8–M9)
 
 - Generate synthetic data from M3 at 3 representative parameter sets (low, medium and high climate sensitivity), with the real data's structure: the same plot area, census dates and observation model.
+  - Anchor the "medium" set on Machado et al. 2023: annual mortality 0.72 %/yr rising to 1.07 %/yr over the 2001–07 drought interval (logit β1 ≈ −0.4), converted to a per-unit-deficit effect. Set "low" below and "high" above it. Include a deficit × size interaction in at least one set, to estimate its minimum detectable size (H-A1).
 - For each set:
   - prior-to-posterior contraction and SBC for every parameter;
   - **the minimum detectable effect** for each climate sensitivity (the smallest effect whose 95% CrI excludes 0 in ≥ 80% of replicates).
@@ -492,14 +530,13 @@ All run on synthetic data with known parameters before real data.
 
 1. Run the A novelty searches and citation chasing (§1.1); log the hits.
 2. Download Uppangala (data paper archive), Anamalai (Zenodo 10426970) and the 96-site data. Start the data dictionary.
-3. Email the IFP and NCF contacts (permissions, authorship, census completeness, POM records).
-4. Ask the research office about NBA/DSI (§1.3); draft the HPC allocation proposal.
+3. ~~Email the IFP and NCF contacts~~ and 4. ~~NBA/DSI query; HPC allocation proposal~~: dropped for Project A (2026-11-23; data use assumed permitted, HPC already available). Census completeness and POM records are audited from the published metadata only (A10).
 5. Set up the repository, the lockfiles, an Apptainer skeleton, the Snakemake skeleton and the simulation-registry schema.
 6. Draft a one-page ODD overview.
 
 ---
 
-## 4. Paper B: India's genetic-diversity indicators, genetic data coverage and climate exposure
+## 4. Project B: India's genetic-diversity indicators, genetic data coverage and climate exposure
 
 ### 4.1 One-sentence claim (target)
 
@@ -659,7 +696,7 @@ The indicators follow Hoban et al. guidance and the multinational protocol (Mast
 
 ---
 
-## 5. Paper C: When does genomic data predict persistence under climate change?
+## 5. Project C: When does genomic data predict persistence under climate change?
 
 ### 5.1 The central question in plain terms
 
@@ -677,7 +714,7 @@ C uses three complementary approaches:
    This diagnostic is new, and it's informative whatever the result.
 2. **Within-scenario evaluation.** Managers compare populations of the *same* species under the *same* climate projection. Pooled metrics across very different simulated scenarios mostly reward predictors that know "fast change kills" (trivially true). So C's headline metrics compare populations **within** a scenario.
 3. **Mechanistic forecast with SBI (§5.9; scope set at Gate C3).** Instead of training a classifier to map genomic summaries to "survived/extinct":
-   - Use NPE (the same tooling as Paper A) to infer each population's hidden state: Ne, genetic variance in the climate trait (V_A), current lag behind the optimum, and load.
+   - Use NPE (the same tooling as Project A) to infer each population's hidden state: Ne, genetic variance in the climate trait (V_A), current lag behind the optimum, and load.
    - Then *simulate its future* from those posteriors to get a calibrated **extinction probability**.
    - Advantage over classifiers: the forecast can be rerun for **any new climate scenario without retraining**, and its uncertainty comes from the model. This is the programme's link between A and C.
 
@@ -878,7 +915,7 @@ For each pair, report:
 
 Split the design space by the theoretical rescue index (k / k_c) and report each rung's skill within each bin.
 
-#### 5.7.6 Sampling design (H-C6; moved here from v1 Paper B)
+#### 5.7.6 Sampling design (H-C6; moved here from v1 Project B)
 
 Subsample the stored tree sequences: n individuals per deme ∈ {5, 10, 20, 40}, number of sampled demes ∈ {5, 10, 20, 40}, and SNP density ∈ {10³, 10⁴, 10⁵}. No new simulations are needed. Report the predictive skill of each rung against sampling effort. This is a direct prescription for empirical studies.
 
@@ -914,10 +951,10 @@ Bay et al. 2018 (yellow warbler, decline from the Breeding Bird Survey); Ruegg e
 
 ### 5.9 Mechanistic forecast with SBI (H-C7; scope set at Gate C3)
 
-This is part of Paper C and uses the same simulation design and registry. It is the paper's answer to "what should replace offset when offset fails?"
+This is part of Project C and uses the same simulation design and registry. It is the paper's answer to "what should replace offset when offset fails?"
 
 1. **Inference target:** for a focal population, the latent state s = (Ne, V_A for each trait, lag z̄ − θ, mean load, r_max). Optionally also the global parameters θ of the design.
-2. **Training data:** simulations drawn from the same design with (observable summaries, latent state) pairs. The observable summaries are GEN, observable LOAD, DEM counts and environmental values. An NPE ensemble (Paper A tooling).
+2. **Training data:** simulations drawn from the same design with (observable summaries, latent state) pairs. The observable summaries are GEN, observable LOAD, DEM counts and environmental values. An NPE ensemble (Project A tooling).
 3. **Forecast:** for each posterior draw, initialise a forward simulation from a population consistent with that draw. The simplest version simulates from the posterior over θ and conditions on matching summaries, which avoids reconstructing genomes. Run it under the target climate scenario to get P(persist by H).
 4. **Evaluation:** expected coverage of the latent-state posteriors; Brier score and log score of the forecasts against the classifiers on held-out runs and transfer regimes; **new climate scenarios not seen in training**, where the classifiers can't be applied without retraining.
 5. **Costs to report:** simulation and training cost against the classifiers; sensitivity to misspecification (forecasting runs generated with plasticity switched on, which the inference model doesn't include).
@@ -987,7 +1024,7 @@ Quarters, with P = primary work, b = background (about 10–20%) and R = revisio
 | Q16 (M46–48) | | | P: **submit M46** |
 | Q17–18 (M49–54) | | | R |
 
-**Real reuse across papers**
+**Real reuse across projects**
 
 - A → C: the NPE ensembles, the SBC and coverage diagnostics, the HPC job-array and registry patterns, and the containers.
 - A → B: the climate pipeline (§2.3).
@@ -1107,9 +1144,24 @@ Probability (P) and impact (I): L = low, M = medium, H = high.
 
 **Data papers**
 
-- Pélissier R. et al. 2011. Uppangala tree demography. *Ecology* (VERIFY).
+- Pélissier R. et al. 2011. Tree demography in an undisturbed Dipterocarp permanent sample plot at Uppangala, Western Ghats of India. *Ecology*, Ecological Archives E092-115. doi:10.1890/10-1991.1.
 - Ramesh B.R. et al. 2010. 96-site central Western Ghats data. *Ecology* (VERIFY).
-- Anamalai long-term plots, Zenodo 10426970.
+- Anamalai long-term plots, Zenodo 10426970. Paper: Murali A. et al. 2025. Structure and dynamics of secondary and mature rainforests: insights from South Asian long-term monitoring plots. *Plant Ecol. Divers.* doi:10.1080/17550874.2025.2494204.
+- † Wilson V.K., Ayyappan N., Parthasarathy N. 2022. Decadal forest dynamics in logged and unlogged sites at Uppangala. *Environ. Monit. Assess.* doi:10.1007/s10661-022-10706-4.
+
+**Project A: closest work and data leads from A01** (DOIs from OpenAlex, 2026-11-23)
+
+- † Machado S., do Valle D.R., Toh K.B., Johnson D.J. 2023. Forest resistance to drought in a humid tropical dipterocarp forest in the Western Ghats of India. *Biotropica*. doi:10.1111/btp.13270.
+- † Le Bec J. et al. 2015. Characterizing tropical tree species growth strategies. *PLoS ONE*. doi:10.1371/journal.pone.0117028.
+- † Moravie M.-A. et al. 1997. Investigating canopy regeneration processes through individual-based spatial models. *Ecol. Model.* doi:10.1016/s0304-3800(97)00128-2.
+- † Schmitt S. et al. 2021. Canopy and understorey tree guilds respond differently to the environment in an Indian rain forest. *J. Veg. Sci.* doi:10.1111/jvs.13075.
+- † Krishnadas M. et al. 2016. *J. Veg. Sci.* doi:10.1111/jvs.12438; Krishnadas M. et al. 2021. *Global Ecol. Biogeogr.* doi:10.1111/geb.13350.
+- † Suresh H.S., Dattaraja H.S., Sukumar R. 2010. Relationship between annual rainfall and tree mortality in a tropical dry forest (Mudumalai). *For. Ecol. Manage.* doi:10.1016/j.foreco.2009.09.025.
+- † Fitha F.J. et al. 2026. Indian forest carbon under CMIP6 and LPJ-GUESS. doi:10.1088/2752-5295/ae4f15.
+- † Aubry-Kientz M. et al. 2013/2015. Coupling growth and mortality models to detect climate drivers of tropical forest dynamics (VERIFY the 2015 *Biogeosciences* version).
+- † Heiland L. et al. 2023. Bayesian calibration of a size-structured forest population model. *Ecol. Evol.* doi:10.1002/ece3.10232.
+- † Rau E.-P. et al. 2021. Transferability of an individual- and trait-based forest dynamics model. *Ecol. Model.* doi:10.1016/j.ecolmodel.2021.109801.
+- † Malchow A.-K. et al. 2026. Calibration, sensitivity and uncertainty analysis of complex ecological models: a review. *Ecol. Lett.* doi:10.1111/ele.70375.
 
 ---
 
@@ -1135,6 +1187,6 @@ Check each item and record the outcome (✔ / ✘ / changed) in `docs/verificati
 ## 10. Open questions (remaining)
 
 1. **The second screener for B:** who? (A student, an intern or a collaborator.) Needed by M5.
-2. **HPC:** which system, the allocation cycle, and the per-job limits. Fill in the M1 proposal.
+2. **HPC:** which system and the per-job limits (access already available; no allocation proposal).
 3. **Stage-1 software for A:** Turing.jl or brms/Stan. Decide in M4 after a one-day prototype of each on a subset of Uppangala.
 4. **B Tier 1:** include freshwater fishes? Decide at M15, depending on range-map quality.

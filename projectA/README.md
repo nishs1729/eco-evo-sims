@@ -1,6 +1,6 @@
-# Paper A: Climate sensitivity of Western Ghats wet-evergreen tree demography
+# Project A: Climate sensitivity of Western Ghats wet-evergreen tree demography
 
-Plan: [ROADMAP.md §3](../ROADMAP.md). Schedule: [planning/PAPER_A_SCHEDULE.md](../planning/PAPER_A_SCHEDULE.md).
+Plan: [ROADMAP.md §3](../ROADMAP.md). Schedule: [planning/PROJECT_A_SCHEDULE.md](../planning/PROJECT_A_SCHEDULE.md).
 
 | Folder | Contents | In git? |
 |---|---|---|
@@ -8,6 +8,7 @@ Plan: [ROADMAP.md §3](../ROADMAP.md). Schedule: [planning/PAPER_A_SCHEDULE.md](
 | `data/raw/` | Downloads exactly as received. Never edited | No |
 | `data/processed/` | Harmonised stems, plot climate, traits, guilds | No |
 | `src/` | Code (flat for now) | Yes |
+| `tests/` | pytest tests; run with `uv run pytest` from the repo root | Yes |
 | `docs/` | Data dictionary, observation-process audit, notes | No (for now) |
 | `results/` | Outputs, regenerated from code | No |
 | `manuscript/` | LaTeX: `main.tex`, `supplement.tex`, `references.bib` | Yes |

@@ -1,6 +1,6 @@
 # shared/sbi
 
-Simulation-based inference tools, written for Paper A and reused by Paper C's mechanistic forecast.
+Simulation-based inference tools, written for Project A and reused by Project C's mechanistic forecast.
 
 ## Planned contents
 

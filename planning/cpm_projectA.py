@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-"""Critical-path schedule for Paper A.
+"""Critical-path schedule for Project A.
 
 Edit the ACTIVITIES list below, then run:
 
-    python3 planning/cpm_paperA.py
+    python3 planning/cpm_projectA.py
 
 The script:
   1. runs the CPM forward and backward passes (ES, EF, LS, LF, total float),
   2. builds a single-researcher schedule (one Effort activity at a time;
      Wait/HPC activities run in parallel; the ready activity with the smallest LS goes first),
   3. rewrites the precedence table and the AON Mermaid diagram in
-     planning/PAPER_A_SCHEDULE.md between the BEGIN/END GENERATED markers,
+     planning/PROJECT_A_SCHEDULE.md between the BEGIN/END GENERATED markers,
   4. prints the summary numbers.
 
-The prose in PAPER_A_SCHEDULE.md (§2, which quotes the summary numbers) is NOT regenerated.
+The prose in PROJECT_A_SCHEDULE.md (§2, which quotes the summary numbers) is NOT regenerated.
 Update it by hand from the printed summary.
 
 Conventions:
@@ -29,27 +29,23 @@ import re
 ACTIVITIES = [
     ("A01", "Novelty searches and citation chasing", "E", 3, [], "Setup"),
     ("A02", "Download datasets; start data dictionary", "E", 1, [], "Setup"),
-    ("A03", "Contact data owners (IFP, NCF)", "E", 1, [], "Setup"),
-    ("A04", "Await replies; agree authorship terms", "W", 6, ["A03"], "Setup"),
-    ("A05", "NBA/DSI clarification (query and wait)", "W", 6, [], "Setup"),
-    ("A06", "HPC allocation proposal", "E", 1, [], "Setup"),
-    ("A07", "Await HPC allocation", "W", 6, ["A06"], "Setup"),
-    ("A08", "Repo, lockfiles, container, Snakemake, registry", "E", 2, [], "Setup"),
+    # A03-A07 and Gate P0 removed 2026-11-23: data use assumed permitted; HPC access already available.
+    # IDs are not renumbered, so references elsewhere stay valid.
+    ("A08", "Repo; Python env and lockfile; tests", "E", 2, [], "Setup"),  # container A20, Snakemake A12-13, registry A24 (ROADMAP 2.2)
     ("GA1", "Gate A1: novelty", "M", 0, ["A01"], "Setup"),
-    ("GP0", "Gate P0: permissions, NBA/DSI, HPC", "M", 0, ["A04", "A05", "A07"], "Setup"),
     ("A09", "Data harmonisation; taxonomic backbone", "E", 3, ["A02"], "Data"),
-    ("A10", "Observation-process audit", "E", 2, ["A09", "A04"], "Data"),
+    ("A10", "Observation-process audit", "E", 2, ["A09"], "Data"),
     ("GA2", "Gate A2: data audit", "M", 0, ["A10"], "Data"),
     ("A11", "Trait compilation; guild definition", "E", 2, ["A09"], "Data"),
     ("A12", "Climate: download; plot-scale station validation", "E", 3, ["A08"], "Climate"),
     ("A13", "Climate: PET, deficit metrics, hindcast series", "E", 2, ["A12"], "Climate"),
     ("A14", "Climate: GCM selection; delta-change projections", "E", 3, ["A13"], "Climate"),
     ("A15", "Stage-1 prototype; choose Turing.jl or brms", "E", 1, ["GA2", "A11", "GA1"], "Stage 1"),
-    ("A16", "Stage-1 fits: growth and survival, M0-M3", "E", 4, ["A15", "A13", "GP0"], "Stage 1"),
+    ("A16", "Stage-1 fits: growth and survival, M0-M3", "E", 4, ["A15", "A13"], "Stage 1"),
     ("A17", "Stage-1 checks: PPC, PSIS-LOO, leave-one-interval-out", "E", 2, ["A16"], "Stage 1"),
     ("A18", "IBM implementation (state, processes)", "E", 4, ["A08", "A11", "GA2", "GA1"], "IBM"),
     ("A19", "Observation model and unit tests", "E", 2, ["A18"], "IBM"),
-    ("A20", "Runtime benchmark; HPC job arrays", "E", 1, ["A19", "A07"], "IBM"),
+    ("A20", "Runtime benchmark; HPC job arrays", "E", 1, ["A19"], "IBM"),
     ("A21", "Priors table; prior-predictive checks", "E", 1, ["A17", "A19"], "IBM"),
     ("A22", "ODD draft", "E", 1, ["A19"], "IBM"),
     ("A23", "Pre-registration (OSF)", "E", 1, ["A17", "A21", "GA1"], "Inference"),
@@ -79,7 +75,7 @@ ACTIVITIES = [
 
 PHASES = ["Setup", "Data", "Climate", "Stage 1", "IBM", "Inference", "Validation", "Projections", "Writing"]
 WEEKS_PER_MONTH = 4.345
-MD_FILE = pathlib.Path(__file__).with_name("PAPER_A_SCHEDULE.md")
+MD_FILE = pathlib.Path(__file__).with_name("PROJECT_A_SCHEDULE.md")
 
 
 def build(activities):

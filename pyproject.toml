@@ -1,0 +1,36 @@
+[project]
+name = "eco-evo-sims"
+version = "0.1.0"
+description = "Research programme: climate vulnerability from forest stands to genomes (see ROADMAP.md)"
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+# Add a dependency only when an activity first needs it, and record it in docs/dependencies.md.
+dependencies = [
+    "pandas>=2.2",    # A09: harmonisation of the census tables
+    "pyarrow>=17",    # Parquet output in data/processed/ (and the simulation registry, A24)
+    "pyyaml>=6",      # manifest.yaml and config files
+    "xlrd>=2.0.1",    # reading the Global Wood Density Database (.xls)
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "ruff>=0.6",
+]
+
+[tool.uv]
+package = false   # a collection of scripts and project folders, not an installable package
+
+[tool.pytest.ini_options]
+testpaths = ["projectA/tests"]
+pythonpath = ["projectA/src"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 110
+src = ["projectA/src"]   # first-party modules, for import sorting
+extend-exclude = ["archive", "literature", "**/data/raw"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501"]   # long lines allowed (URLs, query strings)
